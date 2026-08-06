@@ -1,0 +1,39 @@
+.user-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 20px;
+    background: linear-gradient(170deg, black, grey);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.384);
+    width: 300px;
+    text-align: center;
+    border: 1px solid blue;
+    transition: transform 0.2s ease;
+
+}
+
+.user-container:hover{
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 32px rgba(0, 0, 0, 0.384);
+    border-color: goldenrod;
+
+}
+
+
+#user-name{
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+
+#user-image{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+
+}
+
