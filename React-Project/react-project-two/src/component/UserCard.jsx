@@ -1,6 +1,6 @@
 import React from 'react'
 import './UserCard.css'
-import heroPng from '../assets/react.svg'
+// import heroPng from '../assets/react.svg'
 
 const UserCard = (props) => {
     return (
