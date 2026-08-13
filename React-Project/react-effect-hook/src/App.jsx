@@ -6,6 +6,10 @@ import { useEffect } from 'react'
 function App() {
   const [count, setCount] = useState(0)
   const [total, setTotal] = useState(0)
+  const [time, setTime] = useState(new Date())
+
+  const [search, setSearch] = useState("")
+  const [users, setUsers] = useState([])
 
   // first -> side effect function 
   // second -> clean up function , unmount 
@@ -53,15 +57,15 @@ function App() {
   // [] collection -> state change hoga tb woh effect ko trigger krega 
   // return -> cleanup , unmount
 
-  useEffect(() => {
-    alert('render at where the count changed')
+  // useEffect(() => {
+  //   alert('render at where the count changed')
 
-    // old state ko leave kroge or new m jaaoge 
-    return () => {
-      console.log("Count is Unmounted from the UI")
-    }
+  //   // old state ko leave kroge or new m jaaoge 
+  //   return () => {
+  //     console.log("Count is Unmounted from the UI")
+  //   }
 
-  }, [count, total])
+  // }, [count, total])
 
 
   function handleClick() {
@@ -70,6 +74,65 @@ function App() {
   function handleTotalClick() {
     setTotal(total + 1)
   }
+
+  // --------Clean up function
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     console.log('running')
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
+
+  // Time
+
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setTime(new Date())
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
+
+  // Resize
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     console.log(window.innerWidth)
+  //   }
+
+  //   // 
+  //   window.addEventListener('resize', handleResize)
+
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize)
+  //   }
+
+
+  // }, [])
+
+  // API Call
+
+  useEffect(() => {
+
+
+    // == -> value , === -> data type
+    if (search === "") {
+      return;
+    }
+
+    fetch(`https://api.example.com/users?search=${search}`)
+      .then(res => res.json())
+      .then(data => setUsers(data));
+
+  }, [search]);
+
+
+
 
 
   // Syntax
@@ -83,9 +146,11 @@ function App() {
 
 
 
+
   return (
     <>
-      <div>
+
+      {/* <div>
         <button
           onClick={handleClick}
         >Click</button>
@@ -93,8 +158,8 @@ function App() {
         <br />
 
         Count is : {count}
-      </div>
-      <div>
+      </div> */}
+      {/* <div>
         <button
           onClick={handleTotalClick}
         >Total Click</button>
@@ -104,7 +169,11 @@ function App() {
         Total Count is : {total}
       </div>
 
-      <br />
+      <br /> */}
+      {/* 
+    <h1>Digital Clock</h1>
+
+    <h2>{time.toLocaleTimeString()}</h2> */}
 
     </>
   )
