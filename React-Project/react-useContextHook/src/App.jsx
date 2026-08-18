@@ -18,9 +18,7 @@ function App() {
     <>
       {/* Step 2 -> make provider for the context */}
       <UserContext.Provider value={user}>
-
         <Child1 />
-
       </UserContext.Provider>
 
     </>
