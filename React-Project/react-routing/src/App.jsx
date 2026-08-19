@@ -6,6 +6,10 @@ import About from './component/About';
 import Contact from './component/Contact';
 import Invalid from './component/Invalid';
 import Navbar from './component/Navbar';
+import ParamComp from './component/ParamComp';
+import AddContact from './component/addContact';
+import RemoveContact from './component/removeContact';
+import DeleteContact from './component/deleteContact';
 
 const router = createBrowserRouter([
   {
@@ -32,7 +36,21 @@ const router = createBrowserRouter([
       <div>
         <Contact />
         <Navbar />
-      </div>
+      </div>,
+
+    children: [
+      {
+        path: "add",
+        element: <AddContact/>
+      
+      }, {
+        path: "remove",
+        element: <RemoveContact/>
+      }, {
+        path: "delete",
+        element: <DeleteContact/>
+      }
+    ]
   },
   {
     path: "*",
@@ -40,6 +58,14 @@ const router = createBrowserRouter([
 
       <div>
         <Invalid />
+        <Navbar />
+      </div>
+  },
+  {
+    path: "ducat/:id",
+    element:
+      <div>
+        <ParamComp />
         <Navbar />
       </div>
   }
