@@ -23,17 +23,32 @@ function App() {
   // }
 
   // ------------------
+  // State for Music Player
   const [isPlaying, setisPlaying] = useState(false)
   const [time, setTime] = useState(0)
 
-  // store the interval id
+  // ==========================================================
+  // useRef Concept 1: Storing a Mutable Reference Across Renders
+  // ==========================================================
+  // We use `timerRef` to store the interval ID.
+  // Why useRef?
+  // 1. A normal variable (let timerId) resets on every re-render.
+  // 2. useState causes an extra re-render whenever the timer ID changes.
+  // 3. useRef preserves timerRef.current across re-renders WITHOUT triggering re-renders!
   const timerRef = useRef(null);
 
+  // ==========================================================
+  // useRef Concept 2: Accessing DOM Elements
+  // ==========================================================
+  // We can attach `playerRef` to a JSX element via `ref={playerRef}`
+  // to directly access or manipulate the DOM node.
+  const playerRef = useRef(null);
 
   const duration = 230 // 3min 50 sec
 
   useEffect(() => {
     if (isPlaying) {
+      // Store interval ID in timerRef.current
       timerRef.current = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime >= duration) {
@@ -46,10 +61,9 @@ function App() {
     }
 
     return () => {
+      // Clear interval using timerRef.current
       clearInterval(timerRef.current)
     };
-
-
   }, [isPlaying])
 
   // play / pause
@@ -67,7 +81,7 @@ function App() {
     const minutes = Math.floor(seconds/60)
     const remainingSec = seconds % 60
 
-    return `${minutes}: ${remainingSec.toString()}`
+    return `${minutes}:${remainingSec < 10 ? '0' : ''}${remainingSec}`
   }
 
   const progress = (time/duration) * 100
@@ -94,18 +108,19 @@ function App() {
     // </div>
 
     <div className="app">
-      <div className="player">
+      <div className={`player ${isPlaying ? 'playing' : ''}`} ref={playerRef}>
         <div className="music-icon">🎧</div>
 
         <h1>Music Vibes</h1>
         <p>low beats</p>
 
         <div className="progress-container">
-          <div className='progress'>
-            style = {{
+          <div
+            className='progress'
+            style={{
               width: `${progress}%`
             }}
-          </div>
+          ></div>
         </div>
 
         <div className="time">
@@ -124,6 +139,12 @@ function App() {
         <button className="reset-button" onClick={handleReset}>
           ↺ Reset
         </button>
+
+        {/* Live useRef Explanation Badge */}
+        <div className="useref-info">
+          💡 <strong>useRef Concept:</strong><br />
+          <code>timerRef.current</code> holds Interval ID (<code>{timerRef.current !== null ? timerRef.current : 'null'}</code>) across re-renders without causing extra re-renders.
+        </div>
       </div>
     </div>
   )
